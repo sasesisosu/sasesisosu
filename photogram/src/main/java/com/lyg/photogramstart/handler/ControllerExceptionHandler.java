@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lyg.photogramstart.handler.ex.CustomApiException;
+import com.lyg.photogramstart.handler.ex.CustomException;
 import com.lyg.photogramstart.handler.ex.CustomValidationApiException;
 import com.lyg.photogramstart.handler.ex.CustomValidationException;
 import com.lyg.photogramstart.util.Script;
@@ -25,7 +26,11 @@ public class ControllerExceptionHandler {
 	
 	@ExceptionHandler(CustomValidationException.class)
 	public String validationException(CustomValidationException e) {	
-		return Script.back(e.getErrorMap().toString());
+		if(e.getErrorMap()==null) {
+			return Script.back(e.getMessage());
+		}else {
+			return Script.back(e.getErrorMap().toString());
+		}		
 	}
 	
 	@ExceptionHandler(CustomValidationApiException.class)
@@ -36,6 +41,11 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(CustomApiException.class)
 	public ResponseEntity<?> apiException(CustomApiException e) {	
 		return new ResponseEntity<>(new CMRespDto<>(-1, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(CustomException.class)
+	public String exception(CustomException e) {	
+		return Script.back(e.getMessage());		
 	}
 	
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lyg.photogramstart.domain.user.User;
+import com.lyg.photogramstart.handler.ex.CustomException;
 import com.lyg.photogramstart.handler.ex.CustomValidationApiException;
 import com.lyg.photogramstart.repository.UserRepository;
 
@@ -17,6 +18,14 @@ public class UserService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder; 
+	
+	public User userProfile(int userId) {
+		User userEntity = userRepository.findById(userId).orElseThrow(()->{
+			throw new CustomException("해당 프로필 페이지는 없는 페이지입니다.");
+		});
+		userEntity.getImages().get(userId);
+		return userEntity;
+	}
 	
 	@Transactional
 	public User userUpdate(int id, User user) {

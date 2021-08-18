@@ -1,14 +1,18 @@
 package com.lyg.photogramstart.domain.user;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.lyg.photogramstart.domain.image.Image;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,6 +50,9 @@ public class User {
 	
 	private String profileImageUrl;
 	private String role;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Image> images;
 
 	@CreationTimestamp 
 	private Timestamp createDate;

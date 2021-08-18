@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.lyg.photogramstart.config.auth.PrincipalDetails;
+import com.lyg.photogramstart.domain.image.Image;
 import com.lyg.photogramstart.repository.ImageRepository;
 import com.lyg.photogramstart.web.dto.image.ImageUploadDto;
 
@@ -34,5 +35,26 @@ public class ImageService {
 			e.printStackTrace();
 		}
 		
+		Image image = imageUploadDto.toEntity(imageFileName, principalDetails.getUser());
+		Image imageEntity = imageRepository.save(image);
+		
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
