@@ -39,9 +39,9 @@ public class AuthController {
 	}
 	
 	@PostMapping("/auth/signup")
-	public String signup(@Valid SignupDto signupDto, BindingResult bindingResult) { // 기본적으로 x-www-form-urlencoded형태로 받아줌 ket=value
+	public String signup(@Valid SignupDto signupDto, BindingResult bindingResult) { // 기본적으로 x-www-form-urlencoded형태로 받아줌 key=value
 		log.info(signupDto.toString());
-		
+
 		if(bindingResult.hasErrors()) {
 			Map<String, String> errorMap = new HashMap<>();
 			for(FieldError error : bindingResult.getFieldErrors()) {
