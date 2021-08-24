@@ -11,11 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.lyg.photogramstart.domain.comment.Comment;
 import com.lyg.photogramstart.domain.likes.Likes;
 import com.lyg.photogramstart.domain.user.User;
 
@@ -51,6 +53,11 @@ public class Image {
 	
 	@Transient
 	private int likeCount;
+	
+	@OrderBy("id DESC")
+	@JsonIgnoreProperties({"image"})
+	@OneToMany(mappedBy = "image")
+	private List<Comment> comments;
 	
 	@CreationTimestamp 
 	private Timestamp createDate;

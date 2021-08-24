@@ -1,11 +1,19 @@
 package com.lyg.photogramstart.service;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lyg.photogramstart.domain.user.User;
+import com.lyg.photogramstart.handler.ex.CustomApiException;
 import com.lyg.photogramstart.handler.ex.CustomException;
 import com.lyg.photogramstart.handler.ex.CustomValidationApiException;
 import com.lyg.photogramstart.repository.SubscribeRepository;
@@ -15,6 +23,9 @@ import com.lyg.photogramstart.web.dto.user.UserProfileDto;
 @Service
 public class UserService {
 
+	@Value("${file.path}")
+	private String uploadFolder;
+	
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -23,6 +34,26 @@ public class UserService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder; 
+	
+	@Transactional
+	public User profileImageUrlUpdate(int principalId, MultipartFile profileImageFile) {
+		UUID uuid = UUID.randomUUID();
+		String imageFileName = uuid + "_" + profileImageFile.getOriginalFilename();
+		System.out.println("이미지 : "+ imageFileName);
+		Path imageFilePath = Paths.get(uploadFolder+imageFileName);
+		
+		try {
+			Files.write(imageFilePath, profileImageFile.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		User userEntity = userRepository.findById(principalId).orElseThrow(()->{
+			throw new CustomApiException("유저를 찾을 수 없음");
+		});
+		userEntity.setProfileImageUrl(imageFileName);
+		return userEntity;
+	}
 	
 	@Transactional(readOnly = true)
 	public UserProfileDto userProfile(int pageUserId, int principalId) {
@@ -44,6 +75,10 @@ public class UserService {
 		dto.setSubscribeState(subscribeState==1);
 		dto.setSubscribeCount(subscribeCount);
 		dto.setSubscriberCount(subscriberCount);
+		
+		userEntity.getImages().forEach((image)->{
+			image.setLikeCount(image.getLikes().size());
+		});
 		
 		return dto;
 	}

@@ -1,15 +1,15 @@
-package com.lyg.photogramstart.domain.likes;
+package com.lyg.photogramstart.domain.comment;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -27,30 +27,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(
-	uniqueConstraints = {
-			@UniqueConstraint(
-				name="likes_uk",
-				columnNames = {"imageId", "userId"}
-			)
-	}
-)
-public class Likes {
+public class Comment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@JoinColumn(name = "imageId")
-	@ManyToOne
-	private Image image;
+	@Column(length = 100, nullable = false)
+	private String content;
 	
 	@JsonIgnoreProperties({"images"})
-	@JoinColumn(name = "userId")
-	@ManyToOne
+	@JoinColumn(name="userId")
+	@ManyToOne(fetch = FetchType.EAGER)
 	private User user;
+	
+	@JoinColumn(name="imageId")
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Image image;
 	
 	@CreationTimestamp 
 	private Timestamp createDate;
-	
 }
