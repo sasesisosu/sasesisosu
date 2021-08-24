@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lyg.photogramstart.domain.image.Image;
 
 import lombok.AllArgsConstructor;
@@ -52,6 +53,7 @@ public class User {
 	private String role;
 	
 	@OneToMany(mappedBy = "user")
+	@JsonIgnoreProperties({"user"})
 	private List<Image> images;
 
 	@CreationTimestamp 
