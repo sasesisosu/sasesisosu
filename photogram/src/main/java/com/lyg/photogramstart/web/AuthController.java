@@ -40,20 +40,10 @@ public class AuthController {
 	
 	@PostMapping("/auth/signup")
 	public String signup(@Valid SignupDto signupDto, BindingResult bindingResult) { // 기본적으로 x-www-form-urlencoded형태로 받아줌 key=value
-		log.info(signupDto.toString());
-
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				errorMap.put(error.getField(), error.getDefaultMessage());
-			}
-			throw new CustomValidationException("유효성 검사 실패", errorMap);
-		}else {
-			User user = signupDto.toEntity();
-			User userEntity = authService.userJoin(user);
-			return "auth/signin";
-		}
-
+		User user = signupDto.toEntity();
+		User userEntity = authService.userJoin(user);
+		return "auth/signin";
+		
 	}
 	
 }
