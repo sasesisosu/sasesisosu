@@ -82,7 +82,7 @@ public class Main {
 			webElement.sendKeys("yugisky");
 
 			webElement = driver.findElement(By.id("inputPwd"));
-			webElement.sendKeys("dldbrl12");
+			webElement.sendKeys("******");
 
 			webElement = driver.findElement(By.className("btn_comm"));
 			webElement.click();
@@ -102,8 +102,7 @@ public class Main {
 	public static void input() {
 		int idInput[] = { KeyEvent.VK_Y, KeyEvent.VK_U, KeyEvent.VK_G, KeyEvent.VK_I, KeyEvent.VK_S, KeyEvent.VK_K,
 				KeyEvent.VK_Y };
-		int pwInput[] = { KeyEvent.VK_D, KeyEvent.VK_L, KeyEvent.VK_D, KeyEvent.VK_B, KeyEvent.VK_R, KeyEvent.VK_L,
-				KeyEvent.VK_1, KeyEvent.VK_2 };
+		int pwInput[] = {  };
 		try {
 
 			Robot robot = new Robot();
