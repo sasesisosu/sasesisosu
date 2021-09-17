@@ -1,0 +1,25 @@
+
+server:
+  port: 8080
+  servlet:
+    context-path: /friendsSite
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+
+spring:
+  dataSource:
+    username: 
+    password: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://?serverTimezone=UTC&characterEncoding=UTF-8
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  servlet:
+    multipart:
+      maxFileSize: 30MB
+      maxRequestSize: 30MB
