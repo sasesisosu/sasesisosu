@@ -1,4 +1,4 @@
-package com.cos.photogramstart;
+package com.lyg.photogramstart;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

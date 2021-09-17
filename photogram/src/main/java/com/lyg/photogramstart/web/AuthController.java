@@ -35,11 +35,13 @@ public class AuthController {
 	
 	@GetMapping("/auth/signup")
 	public String signupForm() {
+		System.out.println("11111");
 		return "auth/signup";
 	}
 	
 	@PostMapping("/auth/signup")
 	public String signup(@Valid SignupDto signupDto, BindingResult bindingResult) { // 기본적으로 x-www-form-urlencoded형태로 받아줌 key=value
+		System.out.println("22222");
 		User user = signupDto.toEntity();
 		User userEntity = authService.userJoin(user);
 		return "auth/signin";

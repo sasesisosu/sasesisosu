@@ -35,6 +35,13 @@ spring:
     user:
       name: test
       password: 1234   
+          oauth2:      client:        registration:
+          facebook:
+            client-id: 170778951831063
+            client-secret: 63f7e48e4b7d33ac67757bf7003df2a5
+            scope:
+            - public_profile
+            - email          
 
 file:
   path: C:/Users/yugis/sts/workspace-spring-tool-suite-4-4.9.0.RELEASE/upload/

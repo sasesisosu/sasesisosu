@@ -13,6 +13,7 @@
 	<artifactId>photogram-start</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>photogram-start</name>
+	<packaging>war</packaging>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
@@ -48,9 +49,9 @@
 
 		<!-- JSP 템플릿 엔진 -->
 		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jasper</artifactId>
-			<version>9.0.43</version>
+		    <groupId>org.apache.tomcat.embed</groupId>
+		    <artifactId>tomcat-embed-jasper</artifactId>
+		    <scope>provided</scope>
 		</dependency>
 
 		<!-- JSTL -->
